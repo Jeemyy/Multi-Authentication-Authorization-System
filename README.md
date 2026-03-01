@@ -1,217 +1,241 @@
-# Laravel Multi-Guard Authentication & RBAC System
-
-## 1. Project Title
-
-**Laravel Multi-Guard Authentication and Role-Based Access Control (RBAC) System**
-
----
-
-## 2. Project Overview
-
-This project is a production-oriented Laravel application demonstrating a **multi-guard authentication** architecture with a **Role-Based Access Control (RBAC)** layer for the admin panel. It separates **front-end users** (web guard) and **administrators** (admin guard) with distinct session lifecycles, password reset flows, and email verification. Admin actions are authorized via **Spatie Laravel Permission** (roles and permissions), with **policies and gates** enforcing fine-grained access on resources such as user management.
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel"/>
+  <img src="https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP"/>
+  <img src="https://img.shields.io/badge/Spatie_Permission-6.24-4F46E5?style=for-the-badge" alt="Spatie"/>
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License"/>
+</p>
 
 ---
 
-## 3. System Architecture Explanation
+# 🔐 Laravel Multi-Guard Authentication & RBAC System
+
+> **Production-oriented** multi-guard authentication with Role-Based Access Control for the admin panel — separate sessions for users and admins, Spatie permissions, policies, and gates.
+
+---
+
+## 📋 1. Project Overview
+
+This project demonstrates a **multi-guard authentication** architecture with a **Role-Based Access Control (RBAC)** layer for the admin panel. It separates **front-end users** (web guard) and **administrators** (admin guard) with distinct session lifecycles, password reset flows, and email verification. Admin actions are authorized via **Spatie Laravel Permission** (roles and permissions), with **policies and gates** enforcing fine-grained access on resources such as user management.
+
+| Aspect | Description |
+|--------|-------------|
+| **Front (Web)** | `User` model, session guard `web`, routes under `/front` and `auth.php` |
+| **Back (Admin)** | `Admin` model, session guard `admin`, routes under `/back` and `adminAuth.php` |
+| **RBAC** | Roles & permissions for admins only; User CRUD gated by permissions |
+
+---
+
+## 🏗️ 2. System Architecture
 
 - **Two authentication boundaries**
-  - **Web guard**: session-based authentication for front-end users (`User` model, `users` table). Used for routes under `/front` and auth routes from `routes/auth.php`.
-  - **Admin guard**: session-based authentication for back-office users (`Admin` model, `admins` table). Used for routes under `/back` and auth routes from `routes/adminAuth.php`.
+  - **Web guard** → Session-based auth for front-end users (`User`, `users`). Routes: `/front`, `routes/auth.php`.
+  - **Admin guard** → Session-based auth for back-office (`Admin`, `admins`). Routes: `/back`, `routes/adminAuth.php`.
 
-- **Unified web middleware**: All web and back routes use the same `web` middleware group (session, CSRF, cookies, bindings). Guard selection is done at login and when resolving the current user (`Auth::guard('web')` vs `Auth::guard('admin')`).
+- **Unified web middleware** → All web and back routes use the same `web` middleware group (session, CSRF, cookies, bindings). Guard selection happens at login and when resolving the current user (`Auth::guard('web')` vs `Auth::guard('admin')`).
 
-- **Back-office RBAC**: Only the **Admin** model participates in RBAC. Admins have **roles**; roles have **permissions**. Permissions are scoped to the `admin` guard. User CRUD in the back office is gated by permissions (`add_user`, `show_user`, `edit_user`, `delete_user`) and by the **UserPolicy** (and optionally Spatie-registered gates).
+- **Back-office RBAC** → Only the **Admin** model has roles/permissions. Permissions are scoped to the `admin` guard. User CRUD is gated by permissions (`add_user`, `show_user`, `edit_user`, `delete_user`) and **UserPolicy**.
 
-- **API**: A minimal API route group exists (`routes/api.php`) with Sanctum-protected `/api/user` for the default web user.
-
----
-
-## 4. Authentication Flow
-
-- **Front (web guard)**
-  - **Login**: `GET/POST /login` → `Auth\AuthenticatedSessionController` (guest middleware). Session regenerated after successful auth; redirect to `front.index` (`/front`).
-  - **Register**: `GET/POST /register` → `Auth\RegisteredUserController`.
-  - **Logout**: `POST /logout` → `Auth\AuthenticatedSessionController@destroy` (auth middleware), guard `web` logged out, redirect to `/`.
-  - **Password reset**: `Auth\PasswordResetLinkController`, `Auth\NewPasswordController`; `User` uses custom `UpdatedEmailNotification` for reset mail (link to `/reset-password/{token}`).
-  - **Email verification**: Optional flow via `EmailVerificationPromptController`, `VerifyEmailController`, `EmailVerificationNotificationController` (signed, throttled).
-  - **Protected front**: `/front` → `Front\HomeController` behind `auth` middleware (web guard).
-
-- **Back (admin guard)**
-  - **Login**: `GET/POST /back/login` → `AuthAdmin\AuthenticatedSessionController` (guest). Authenticates using guard `admin`; redirect to `back.index` (`/back`).
-  - **Register**: `GET/POST /back/register` → `AuthAdmin\RegisteredUserController`.
-  - **Logout**: `POST /back/logout` → `AuthAdmin\AuthenticatedSessionController@destroy` (admin middleware), guard `admin` logged out, redirect to `/back/login`.
-  - **Password reset**: `AuthAdmin\PasswordResetLinkController`, `AuthAdmin\NewPasswordController`; `Admin` uses `AdminPasswordNotification` for reset mail (link to `/back/reset-password/{token}`).
-  - **Protected back**: All routes under `Route::prefix('back')` that need admin auth use the **admin** middleware; unauthenticated admin requests redirect to `back.login`.
-
-- **RedirectIfAuthenticated**: For guest routes, redirects to `back.index` when guard `admin` is authenticated, and to `front.index` when the default guard is authenticated.
+- **API** → Minimal API group (`routes/api.php`) with Sanctum-protected `/api/user`.
 
 ---
 
-## 5. Authorization Layer (RBAC Explanation)
+## 🔑 3. Authentication Flow
 
-- **Scope**: RBAC applies only to **admins**. The **User** model has no roles/permissions; it is the **resource** being managed in the back office.
+### Front (web guard)
+
+| Action | Route / Controller | Notes |
+|--------|--------------------|--------|
+| **Login** | `GET/POST /login` → `Auth\AuthenticatedSessionController` | Guest middleware → redirect to `front.index` |
+| **Register** | `GET/POST /register` → `Auth\RegisteredUserController` | — |
+| **Logout** | `POST /logout` | Guard `web` logged out → redirect `/` |
+| **Password reset** | `PasswordResetLinkController`, `NewPasswordController` | `User` uses `UpdatedEmailNotification` → `/reset-password/{token}` |
+| **Email verification** | `EmailVerificationPromptController`, `VerifyEmailController` | Signed, throttled |
+| **Protected** | `/front` → `Front\HomeController` | `auth` middleware (web guard) |
+
+### Back (admin guard)
+
+| Action | Route / Controller | Notes |
+|--------|--------------------|--------|
+| **Login** | `GET/POST /back/login` → `AuthAdmin\AuthenticatedSessionController` | Guest → redirect `back.index` |
+| **Register** | `GET/POST /back/register` → `AuthAdmin\RegisteredUserController` | — |
+| **Logout** | `POST /back/logout` | Guard `admin` logged out → redirect `/back/login` |
+| **Password reset** | `AuthAdmin\PasswordResetLinkController`, `NewPasswordController` | `Admin` uses `AdminPasswordNotification` → `/back/reset-password/{token}` |
+| **Protected** | All `Route::prefix('back')` | **admin** middleware → unauthenticated redirect to `back.login` |
+
+**RedirectIfAuthenticated** → Redirects to `back.index` when guard `admin` is authenticated, and to `front.index` when the default guard is authenticated.
+
+---
+
+## 🛡️ 4. Authorization Layer (RBAC)
+
+- **Scope** → RBAC applies only to **admins**. **User** is the resource being managed (no roles/permissions).
 
 - **Concepts**
-  - **Permissions**: Named abilities (e.g. `add_user`, `show_user`, `edit_user`, `delete_user`) stored in `permissions` with `guard_name = 'admin'`.
-  - **Roles**: Named groups (e.g. Super Admin, Editor) stored in `roles` with `guard_name = 'admin'`. Roles are assigned to admins; permissions are attached to roles (and optionally directly to admins via Spatie).
-  - **Guard**: All permission/role checks use the **admin** guard so that only the `Admin` model is authorized via RBAC.
+  - **Permissions** → Abilities (`add_user`, `show_user`, `edit_user`, `delete_user`) in `permissions` with `guard_name = 'admin'`.
+  - **Roles** → Groups in `roles` with `guard_name = 'admin'`; assigned to admins; permissions attached to roles.
+  - **Guard** → All checks use the **admin** guard.
 
 - **Enforcement**
-  - **User CRUD**: `Back\UserController` uses `Gate::forUser($admin)->authorize('add_user'|'show_user'|'edit_user')` (and policy for create/update/delete). Spatie’s `register_permission_check_method` registers gates for each permission, so these gates resolve to the admin’s permissions.
-  - **UserPolicy**: Maps `User::class` to `UserPolicy`; methods `create`, `update`, `delete` receive the current **Admin** (when invoked in back context) and allow/deny based on `add_user`, `edit_user`, `delete_user` respectively.
-  - **Optional middleware**: `SetPermission` middleware (`setPermission::permission_name`) can restrict routes by permission (e.g. `setPermission::add_user`); it is defined but not applied on the resource routes in favor of explicit Gate/authorize calls in the controller.
-
-- **Admins & Roles**: `Back\AdminController` lists, creates, updates, and deletes admins and assigns/syncs roles via Spatie (`assignRole`, `syncRoles`). `Back\RolesController` manages roles and attaches permissions via `givePermissionTo` / `syncPermissions`.
+  - **User CRUD** → `Back\UserController` uses `Gate::forUser($admin)->authorize('add_user'|'show_user'|'edit_user')` and **UserPolicy** for create/update/delete.
+  - **SetPermission middleware** → `setPermission::permission_name` can restrict routes; defined but not applied on resource routes (explicit Gate/authorize in controller).
+  - **Admins & Roles** → `Back\AdminController` (assign/sync roles), `Back\RolesController` (roles + permissions via `givePermissionTo` / `syncPermissions`).
 
 ---
 
-## 6. Guards & Middleware Structure
+## ⚙️ 5. Guards & Middleware Structure
 
-**Guards** (`config/auth.php`)
+### Guards (`config/auth.php`)
 
-| Guard  | Driver  | Provider | Model        |
-|--------|---------|----------|--------------|
-| `web`  | session | users    | `App\Models\User`  |
-| `admin`| session | admins   | `App\Models\Admin` |
+| Guard | Driver | Provider | Model |
+|-------|--------|----------|--------|
+| `web` | session | users | `App\Models\User` |
+| `admin` | session | admins | `App\Models\Admin` |
 
-**Password reset config**: Separate entries under `passwords` for `users` and `admins` (same table `password_reset_tokens`, same expire/throttle).
+**Password reset** → Separate `passwords` entries for `users` and `admins` (same table, same expire/throttle).
 
-**Middleware** (`app/Http/Kernel.php`)
+### Middleware (`app/Http/Kernel.php`)
 
-- **Groups**: `web` (cookies, session, CSRF, bindings), `api` (throttle, bindings).
-- **Aliases**:
-  - `auth` → `Authenticate` (redirects to `login` or `back.login` for `back/*`).
-  - `guest` → `RedirectIfAuthenticated` (redirects authenticated admin to `back.index`, authenticated web to `front.index`).
-  - `admin` → `Admin`: ensures `Auth::guard('admin')->check()`; otherwise redirects to `back.login`.
-  - `setPermission` → `SetPermission`: accepts a permission name; allows request if the admin has that permission, else `abort(403)`.
-  - `can` → Laravel’s `Authorize` (for policy/gate).
-  - `verified` → `EnsureEmailIsVerified`.
-  - `signed`, `throttle`, `password.confirm`, etc.
+| Alias | Class | Purpose |
+|-------|--------|---------|
+| `auth` | `Authenticate` | Redirect to `login` or `back.login` for `back/*` |
+| `guest` | `RedirectIfAuthenticated` | Redirect authenticated admin → `back.index`, web → `front.index` |
+| `admin` | `Admin` | Require `Auth::guard('admin')->check()` else `back.login` |
+| `setPermission` | `SetPermission` | Require admin has given permission else `403` |
+| `can` | `Authorize` | Policy/gate authorization |
+| `verified` | `EnsureEmailIsVerified` | — |
 
----
-
-## 7. Roles & Permissions Structure
-
-- **Spatie Laravel Permission**: Models `Spatie\Permission\Models\Role` and `Spatie\Permission\Models\Permission`; guard `admin` for both.
-- **Seeder**: `PermissionSeeder` seeds permissions: `add_user`, `show_user`, `edit_user`, `delete_user` with `guard_name = 'admin'`. Run it (e.g. from `DatabaseSeeder`) to bootstrap permissions.
-- **Admin model**: Uses `HasRoles` trait; admins get roles and inherit permissions from roles (and can have direct permissions).
-- **Custom helper**: `permission($permission)` in `app/Helpers/helpers.php` (loaded via composer autoload-dev) returns whether the current admin has the given permission.
+**Groups** → `web` (cookies, session, CSRF, bindings), `api` (throttle, bindings).
 
 ---
 
-## 8. Policies & Gates Implementation
+## 👥 6. Roles & Permissions Structure
 
-- **Policies**
-  - **UserPolicy**: Registered for `User::class`. Methods `create(Admin $admin)`, `update(Admin $admin, User $model)`, `delete(Admin $admin, User $model)` use `$admin->hasAnyPermission('add_user'|'edit_user'|'delete_user')` and return `Response::allow()` or `Response::deny(...)`.
-  - No policy is registered for `Admin` or for Spatie’s `Role`/`Permission`; back-office access to those is protected by the **admin** middleware only.
-
-- **Gates**
-  - Spatie registers a permission-check gate for each permission when `register_permission_check_method` is true (`config/permission.php`). So `Gate::forUser($admin)->authorize('add_user')` (and similarly `show_user`, `edit_user`) are valid and enforce the admin’s permissions.
-  - Custom Gate definitions in `AuthServiceProvider` (e.g. `add_user`, `edit_user`, `show_user`) are commented out; the application relies on Spatie’s registered gates and on **UserPolicy** for user resource actions.
+- **Spatie Laravel Permission** → `Role` and `Permission` models; guard `admin` for both.
+- **PermissionSeeder** → Seeds `add_user`, `show_user`, `edit_user`, `delete_user` with `guard_name = 'admin'`. Run to bootstrap permissions.
+- **Admin model** → Uses `HasRoles`; admins have roles and inherit (or have direct) permissions.
+- **Helper** → `permission($permission)` in `app/Helpers/helpers.php` returns whether the current admin has the given permission.
 
 ---
 
-## 9. Database Design Overview
+## 📜 7. Policies & Gates Implementation
 
-- **users**: `id`, `name`, `email` (unique), `email_verified_at`, `password`, `remember_token`, `timestamps`. Used by guard `web`.
-- **admins**: Same structure as `users`. Used by guard `admin` and for RBAC (HasRoles).
-- **password_reset_tokens**: `email` (primary), `token`, `created_at`. Shared by both password reset flows (config distinguishes by provider).
-- **Spatie permission tables** (migration `create_permission_tables`):
-  - **permissions**: `id`, `name`, `guard_name`, `timestamps`; unique `(name, guard_name)`.
-  - **roles**: `id`, `name`, `guard_name`, `timestamps`; unique `(name, guard_name)`.
-  - **model_has_roles**: pivot `role_id`, `model_type`, `model_id` (links Admin to Role).
-  - **role_has_permissions**: pivot `permission_id`, `role_id`.
-  - **model_has_permissions**: pivot for direct model–permission assignment (optional).
-- **personal_access_tokens**: Laravel Sanctum (for API).
-- **failed_jobs**: Laravel queue failed jobs.
-
-**Relationships**: Admins have many roles (and roles many admins) via `model_has_roles`; roles have many permissions (and vice versa) via `role_has_permissions`. Users have no role/permission tables; they are the target of admin actions.
+- **UserPolicy** → Registered for `User::class`. Methods `create`, `update`, `delete` receive **Admin** and use `hasAnyPermission('add_user'|'edit_user'|'delete_user')` → `Response::allow()` or `Response::deny(...)`.
+- **Admin / Role / Permission** → No policies; protected by **admin** middleware only.
+- **Gates** → Spatie registers a permission-check gate per permission (`register_permission_check_method` in `config/permission.php`). Custom Gate definitions in `AuthServiceProvider` are commented out; app uses Spatie gates + **UserPolicy**.
 
 ---
 
-## 10. Tech Stack
+## 🗄️ 8. Database Design Overview
 
-| Layer        | Technology |
-|-------------|------------|
-| Framework   | Laravel 10.x |
-| PHP         | ^8.1 |
-| Auth (stack)| Laravel Breeze (Blade) – controllers and routes structure |
-| Multi-guard | Laravel session guards (`web`, `admin`) |
-| RBAC        | Spatie Laravel Permission ^6.24 |
-| API auth    | Laravel Sanctum ^3.3 |
-| Frontend    | Blade views; back office uses custom assets (e.g. Argon-style assets under `public/assets-back`) |
+| Table | Purpose |
+|-------|---------|
+| **users** | Web guard; `id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `timestamps` |
+| **admins** | Admin guard + RBAC; same structure as `users` |
+| **password_reset_tokens** | Shared by both reset flows (`email`, `token`, `created_at`) |
+| **permissions** | Spatie: `id`, `name`, `guard_name`, `timestamps` |
+| **roles** | Spatie: `id`, `name`, `guard_name`, `timestamps` |
+| **model_has_roles** | Pivot: Admin ↔ Role |
+| **role_has_permissions** | Pivot: Role ↔ Permission |
+| **model_has_permissions** | Direct model–permission (optional) |
+| **personal_access_tokens** | Sanctum (API) |
+| **failed_jobs** | Queue failed jobs |
 
----
-
-## 11. Installation Guide
-
-1. **Clone and install dependencies**
-   ```bash
-   git clone <repository-url>
-   cd Authentication_and_Authorization_Course
-   composer install
-   ```
-
-2. **Environment**
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
-   Configure `.env`: `APP_URL`, database (`DB_*`), and mail (`MAIL_*` for SMTP/Mailtrap, etc.).
-
-3. **Database**
-   ```bash
-   php artisan migrate
-   ```
-   Ensure `PermissionSeeder` has been run so permissions exist:
-   ```bash
-   php artisan db:seed --class=PermissionSeeder
-   ```
-   Or add `PermissionSeeder` to `DatabaseSeeder` and run `php artisan db:seed`.
-
-4. **Optional**
-   - Link storage: `php artisan storage:link`
-   - Clear config/cache: `php artisan config:clear` (especially after changing `config/permission.php`)
+**Relationships** → Admins ↔ Roles via `model_has_roles`; Roles ↔ Permissions via `role_has_permissions`. Users are not in RBAC tables.
 
 ---
 
-## 12. Usage Instructions
+## 📦 9. Tech Stack
 
-- **Front**: Visit `/` for the welcome page; `/login`, `/register`, `/forgot-password` for auth. After login, access the front dashboard at `/front`.
-- **Back**: Visit `/back/login` to sign in as an admin. After login, `/back` is the dashboard; `/back/admins`, `/back/roles`, `/back/users` for CRUD. Create roles and assign permissions via Roles CRUD; assign roles to admins via Admins CRUD. User CRUD is permission-gated (`add_user`, `show_user`, `edit_user`, `delete_user`).
-- **API**: Use Sanctum for API auth; `/api/user` returns the authenticated user (default guard) when called with a valid Sanctum token.
-
----
-
-## 13. Security Considerations
-
-- **Guards**: Front and back use separate guards and providers to avoid mixing user and admin sessions and credentials.
-- **CSRF**: All web forms are protected by the `web` middleware (VerifyCsrfToken).
-- **Passwords**: Stored hashed (Laravel’s `hashed` cast); reset tokens have expiry and throttle configured in `config/auth.php`.
-- **Email verification**: Both `User` and `Admin` implement `MustVerifyEmail`; verification routes are in place for the web guard.
-- **Authorization**: Back-office user actions are authorized by permission checks (gates) and UserPolicy rather than only by being logged in as admin.
-- **Rate limiting**: Login uses a throttle (e.g. 5 attempts) in `LoginRequest`; API uses the `api` throttle.
-- **Spatie**: Permission cache is used; clear cache after changing roles/permissions if not using the package’s automatic invalidation.
+| Layer | Technology |
+|-------|------------|
+| Framework | Laravel 10.x |
+| PHP | ^8.1 |
+| Auth stack | Laravel Breeze (Blade) — controllers & routes |
+| Multi-guard | Session guards `web`, `admin` |
+| RBAC | Spatie Laravel Permission ^6.24 |
+| API auth | Laravel Sanctum ^3.3 |
+| Frontend | Blade; back office assets under `public/assets-back` |
 
 ---
 
-## 14. Project Purpose
+## 🚀 10. Installation Guide
 
-This codebase serves as a **reference implementation** for:
+**1. Clone and install dependencies**
 
-- Multi-guard authentication (web vs admin) in Laravel with separate login, logout, and password reset flows.
+```bash
+git clone <repository-url>
+cd Authentication_and_Authorization_Course
+composer install
+```
+
+**2. Environment**
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Configure `.env`: `APP_URL`, `DB_*`, `MAIL_*` (SMTP/Mailtrap, etc.).
+
+**3. Database**
+
+```bash
+php artisan migrate
+php artisan db:seed --class=PermissionSeeder
+```
+
+Or add `PermissionSeeder` to `DatabaseSeeder` and run `php artisan db:seed`.
+
+**4. Optional**
+
+```bash
+php artisan storage:link
+php artisan config:clear
+```
+
+---
+
+## 📖 11. Usage Instructions
+
+- **Front** → `/` (welcome), `/login`, `/register`, `/forgot-password`. After login → `/front`.
+- **Back** → `/back/login` → dashboard `/back`; CRUD at `/back/admins`, `/back/roles`, `/back/users`. Create roles, assign permissions, assign roles to admins. User CRUD is permission-gated.
+- **API** → Sanctum auth; `GET /api/user` returns authenticated user with valid token.
+
+---
+
+## 🔒 12. Security Considerations
+
+| Area | Implementation |
+|------|-----------------|
+| **Guards** | Separate guards/providers for user vs admin sessions |
+| **CSRF** | All web forms protected by `web` middleware |
+| **Passwords** | Hashed (Laravel cast); reset tokens with expiry and throttle |
+| **Email verification** | `User` and `Admin` implement `MustVerifyEmail`; routes for web guard |
+| **Authorization** | Permission gates + UserPolicy for back-office user actions |
+| **Rate limiting** | Login throttle (e.g. 5 attempts); API throttle |
+| **Spatie cache** | Permission cache; clear after role/permission changes if needed |
+
+---
+
+## 🎯 13. Project Purpose
+
+This codebase is a **reference implementation** for:
+
+- Multi-guard authentication (web vs admin) with separate login, logout, and password reset flows.
 - RBAC with Spatie Laravel Permission scoped to the admin guard.
-- Combining **policies** (for resource-level rules) and **permission-based gates** (for ability names) in the same application.
-- Custom notifications for password reset (user vs admin) and guard-aware redirects in middleware.
+- Combining **policies** (resource-level) and **permission-based gates** in one app.
+- Custom password-reset notifications (user vs admin) and guard-aware redirects.
 
-It is suitable for portfolios and as a base for applications that require a clear separation between end-users and back-office staff with role-based permissions.
+Suitable for **portfolios** and as a base for apps that need a clear separation between end-users and back-office staff with role-based permissions.
 
 ---
 
-## 15. Author Section
+## 👤 14. Author
 
-**Project**: Laravel Multi-Guard Authentication & RBAC System  
-**Repository**: Authentication and Authorization Course  
-**License**: MIT (or as specified in the repository)
+| | |
+|---|---|
+| **Project** | Laravel Multi-Guard Authentication & RBAC System |
+| **Repository** | Authentication and Authorization Course |
+| **License** | MIT (or as specified in the repository) |
 
-For questions or contributions, please open an issue or pull request in the repository.
+For questions or contributions, open an issue or pull request in the repository.
