@@ -229,13 +229,3 @@ This codebase is a **reference implementation** for:
 Suitable for **portfolios** and as a base for apps that need a clear separation between end-users and back-office staff with role-based permissions.
 
 ---
-
-## 👤 14. Author
-
-| | |
-|---|---|
-| **Project** | Laravel Multi-Guard Authentication & RBAC System |
-| **Repository** | Authentication and Authorization Course |
-| **License** | MIT (or as specified in the repository) |
-
-For questions or contributions, open an issue or pull request in the repository.
