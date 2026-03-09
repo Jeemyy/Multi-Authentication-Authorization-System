@@ -12,7 +12,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 ## ********** Home **********##
 Route::prefix('front')->name('front.')->group(function(){
     Route::get('/', HomeController::class)->name('index')->middleware('auth');

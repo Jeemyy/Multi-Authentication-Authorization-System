@@ -1,491 +1,383 @@
 @extends('layouts.master-back')
 @section('title', 'Back Home Page')
 @section('content')
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="row">
-            <div class="col-lg-8 mb-4 order-0">
-                <div class="card">
-                    <div class="d-flex align-items-end row">
-                        <div class="col-sm-7">
-                            <div class="card-body">
-                                <h5 class="card-title text-primary">Congratulations {{Auth::guard('admin')->user()->name}}! 🎉</h5>
-                                <p class="mb-4">
-                                    You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
-                                    your profile.
-                                </p>
+      <div class="w-full px-6 py-6 mx-auto">
+        <!-- row 1 -->
+        <div class="flex flex-wrap -mx-3">
+          <!-- card1 -->
+          <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+            <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+              <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3">
+                  <div class="flex-none w-2/3 max-w-full px-3">
+                    <div>
+                      <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Today's Money</p>
+                      <h5 class="mb-2 font-bold dark:text-white">$53,000</h5>
+                      <p class="mb-0 dark:text-white dark:opacity-60">
+                        <span class="text-sm font-bold leading-normal text-emerald-500">+55%</span>
+                        since yesterday
+                      </p>
+                    </div>
+                  </div>
+                  <div class="px-3 text-right basis-1/3">
+                    <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-blue-500 to-violet-500">
+                      <i class="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-5 text-center text-sm-left">
-                            <div class="card-body pb-0 px-0 px-md-4">
-                                <img src="{{ asset('assets-back') }}/img/illustrations/man-with-laptop-light.png"
-                                    height="140" alt="View Badge User"
-                                    data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                                    data-app-light-img="illustrations/man-with-laptop-light.png" />
-                            </div>
-                        </div>
+          <!-- card2 -->
+          <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+            <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+              <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3">
+                  <div class="flex-none w-2/3 max-w-full px-3">
+                    <div>
+                      <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Today's Users</p>
+                      <h5 class="mb-2 font-bold dark:text-white">2,300</h5>
+                      <p class="mb-0 dark:text-white dark:opacity-60">
+                        <span class="text-sm font-bold leading-normal text-emerald-500">+3%</span>
+                        since last week
+                      </p>
                     </div>
+                  </div>
+                  <div class="px-3 text-right basis-1/3">
+                    <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-red-600 to-orange-600">
+                      <i class="ni leading-none ni-world text-lg relative top-3.5 text-white"></i>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-            <div class="col-lg-4 col-md-4 order-1">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12 col-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title d-flex align-items-start justify-content-between">
-                                    <div class="avatar flex-shrink-0">
-                                        <img src="{{ asset('assets-back') }}/img/icons/unicons/chart-success.png"
-                                            alt="chart success" class="rounded" />
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="fw-semibold d-block mb-1">Profit</span>
-                                <h3 class="card-title mb-2">$12,628</h3>
-                                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title d-flex align-items-start justify-content-between">
-                                    <div class="avatar flex-shrink-0">
-                                        <img src="{{ asset('assets-back') }}/img/icons/unicons/wallet-info.png"
-                                            alt="Credit Card" class="rounded" />
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="cardOpt6" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span>Sales</span>
-                                <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Total Revenue -->
-            <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
-                <div class="card">
-                    <div class="row row-bordered g-0">
-                        <div class="col-md-8">
-                            <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
-                            <div id="totalRevenueChart" class="px-2"></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button"
-                                            id="growthReportId" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            2022
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                            <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">2019</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="growthChart"></div>
-                            <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
+          </div>
 
-                            <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
-                                <div class="d-flex">
-                                    <div class="me-2">
-                                        <span class="badge bg-label-primary p-2"><i
-                                                class="bx bx-dollar text-primary"></i></span>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <small>2022</small>
-                                        <h6 class="mb-0">$32.5k</h6>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <div class="me-2">
-                                        <span class="badge bg-label-info p-2"><i
-                                                class="bx bx-wallet text-info"></i></span>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <small>2021</small>
-                                        <h6 class="mb-0">$41.2k</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <!-- card3 -->
+          <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+            <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+              <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3">
+                  <div class="flex-none w-2/3 max-w-full px-3">
+                    <div>
+                      <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">New Clients</p>
+                      <h5 class="mb-2 font-bold dark:text-white">+3,462</h5>
+                      <p class="mb-0 dark:text-white dark:opacity-60">
+                        <span class="text-sm font-bold leading-normal text-red-600">-2%</span>
+                        since last quarter
+                      </p>
                     </div>
+                  </div>
+                  <div class="px-3 text-right basis-1/3">
+                    <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-emerald-500 to-teal-400">
+                      <i class="ni leading-none ni-paper-diploma text-lg relative top-3.5 text-white"></i>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-            <!--/ Total Revenue -->
-            <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
-                <div class="row">
-                    <div class="col-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title d-flex align-items-start justify-content-between">
-                                    <div class="avatar flex-shrink-0">
-                                        <img src="{{ asset('assets-back') }}/img/icons/unicons/paypal.png"
-                                            alt="Credit Card" class="rounded" />
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="cardOpt4" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt4">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="d-block mb-1">Payments</span>
-                                <h3 class="card-title text-nowrap mb-2">$2,456</h3>
-                                <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>
-                                    -14.82%</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title d-flex align-items-start justify-content-between">
-                                    <div class="avatar flex-shrink-0">
-                                        <img src="{{ asset('assets-back') }}/img/icons/unicons/cc-primary.png"
-                                            alt="Credit Card" class="rounded" />
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="cardOpt1" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="fw-semibold d-block mb-1">Transactions</span>
-                                <h3 class="card-title mb-2">$14,857</h3>
-                                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.14%</small>
-                            </div>
-                        </div>
-                    </div>
+          </div>
 
-                    <div class="col-12 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
-                                    <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                                        <div class="card-title">
-                                            <h5 class="text-nowrap mb-2">Profile Report</h5>
-                                            <span class="badge bg-label-warning rounded-pill">Year 2021</span>
-                                        </div>
-                                        <div class="mt-sm-auto">
-                                            <small class="text-success text-nowrap fw-semibold"><i
-                                                    class="bx bx-chevron-up"></i> 68.2%</small>
-                                            <h3 class="mb-0">$84,686k</h3>
-                                        </div>
-                                    </div>
-                                    <div id="profileReportChart"></div>
-                                </div>
-                            </div>
-                        </div>
+          <!-- card4 -->
+          <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
+            <div class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+              <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3">
+                  <div class="flex-none w-2/3 max-w-full px-3">
+                    <div>
+                      <p class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">Sales</p>
+                      <h5 class="mb-2 font-bold dark:text-white">$103,430</h5>
+                      <p class="mb-0 dark:text-white dark:opacity-60">
+                        <span class="text-sm font-bold leading-normal text-emerald-500">+5%</span>
+                        than last month
+                      </p>
                     </div>
+                  </div>
+                  <div class="px-3 text-right basis-1/3">
+                    <div class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-orange-500 to-yellow-500">
+                      <i class="ni leading-none ni-cart text-lg relative top-3.5 text-white"></i>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="row">
-            <!-- Order Statistics -->
-            <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
-                        <div class="card-title mb-0">
-                            <h5 class="m-0 me-2">Order Statistics</h5>
-                            <small class="text-muted">42.82k Total Sales</small>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                                <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="d-flex flex-column align-items-center gap-1">
-                                <h2 class="mb-2">8,258</h2>
-                                <span>Total Orders</span>
-                            </div>
-                            <div id="orderStatisticsChart"></div>
-                        </div>
-                        <ul class="p-0 m-0">
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i
-                                            class="bx bx-mobile-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-0">Electronic</h6>
-                                        <small class="text-muted">Mobile, Earbuds, TV</small>
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">82.5k</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-success"><i
-                                            class="bx bx-closet"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-0">Fashion</h6>
-                                        <small class="text-muted">T-shirt, Jeans, Shoes</small>
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">23.8k</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-info"><i
-                                            class="bx bx-home-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-0">Decor</h6>
-                                        <small class="text-muted">Fine Art, Dining</small>
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">849k</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-secondary"><i
-                                            class="bx bx-football"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-0">Sports</h6>
-                                        <small class="text-muted">Football, Cricket Kit</small>
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">99</small>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!--/ Order Statistics -->
 
-            <!-- Expense Overview -->
-            <div class="col-md-6 col-lg-4 order-1 mb-4">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <ul class="nav nav-pills" role="tablist">
-                            <li class="nav-item">
-                                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#navs-tabs-line-card-income"
-                                    aria-controls="navs-tabs-line-card-income" aria-selected="true">
-                                    Income
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button type="button" class="nav-link" role="tab">Expenses</button>
-                            </li>
-                            <li class="nav-item">
-                                <button type="button" class="nav-link" role="tab">Profit</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body px-0">
-                        <div class="tab-content p-0">
-                            <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
-                                <div class="d-flex p-4 pt-3">
-                                    <div class="avatar flex-shrink-0 me-3">
-                                        <img src="{{ asset('assets-back') }}/img/icons/unicons/wallet.png"
-                                            alt="User" />
-                                    </div>
-                                    <div>
-                                        <small class="text-muted d-block">Total Balance</small>
-                                        <div class="d-flex align-items-center">
-                                            <h6 class="mb-0 me-1">$459.10</h6>
-                                            <small class="text-success fw-semibold">
-                                                <i class="bx bx-chevron-up"></i>
-                                                42.9%
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="incomeChart"></div>
-                                <div class="d-flex justify-content-center pt-4 gap-2">
-                                    <div class="flex-shrink-0">
-                                        <div id="expensesOfWeek"></div>
-                                    </div>
-                                    <div>
-                                        <p class="mb-n1 mt-1">Expenses This Week</p>
-                                        <small class="text-muted">$39 less than last week</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- cards row 2 -->
+        <div class="flex flex-wrap mt-6 -mx-3">
+          <div class="w-full max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
+            <div class="border-black/12.5 dark:bg-slate-850 dark:shadow-dark-xl shadow-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
+              <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid p-6 pt-4 pb-0">
+                <h6 class="capitalize dark:text-white">Sales overview</h6>
+                <p class="mb-0 text-sm leading-normal dark:text-white dark:opacity-60">
+                  <i class="fa fa-arrow-up text-emerald-500"></i>
+                  <span class="font-semibold">4% more</span> in 2021
+                </p>
+              </div>
+              <div class="flex-auto p-4">
+                <div>
+                  <canvas id="chart-line" height="300"></canvas>
                 </div>
+              </div>
             </div>
-            <!--/ Expense Overview -->
+          </div>
 
-            <!-- Transactions -->
-            <div class="col-md-6 col-lg-4 order-2 mb-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="card-title m-0 me-2">Transactions</h5>
-                        <div class="dropdown">
-                            <button class="btn p-0" type="button" id="transactionID" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-                                <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <ul class="p-0 m-0">
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <img src="{{ asset('assets-back') }}/img/icons/unicons/paypal.png" alt="User"
-                                        class="rounded" />
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <small class="text-muted d-block mb-1">Paypal</small>
-                                        <h6 class="mb-0">Send money</h6>
-                                    </div>
-                                    <div class="user-progress d-flex align-items-center gap-1">
-                                        <h6 class="mb-0">+82.6</h6>
-                                        <span class="text-muted">USD</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <img src="{{ asset('assets-back') }}/img/icons/unicons/wallet.png" alt="User"
-                                        class="rounded" />
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <small class="text-muted d-block mb-1">Wallet</small>
-                                        <h6 class="mb-0">Mac'D</h6>
-                                    </div>
-                                    <div class="user-progress d-flex align-items-center gap-1">
-                                        <h6 class="mb-0">+270.69</h6>
-                                        <span class="text-muted">USD</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <img src="{{ asset('assets-back') }}/img/icons/unicons/chart.png" alt="User"
-                                        class="rounded" />
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <small class="text-muted d-block mb-1">Transfer</small>
-                                        <h6 class="mb-0">Refund</h6>
-                                    </div>
-                                    <div class="user-progress d-flex align-items-center gap-1">
-                                        <h6 class="mb-0">+637.91</h6>
-                                        <span class="text-muted">USD</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <img src="{{ asset('assets-back') }}/img/icons/unicons/cc-success.png" alt="User"
-                                        class="rounded" />
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <small class="text-muted d-block mb-1">Credit Card</small>
-                                        <h6 class="mb-0">Ordered Food</h6>
-                                    </div>
-                                    <div class="user-progress d-flex align-items-center gap-1">
-                                        <h6 class="mb-0">-838.71</h6>
-                                        <span class="text-muted">USD</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <img src="{{ asset('assets-back') }}/img/icons/unicons/wallet.png" alt="User"
-                                        class="rounded" />
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <small class="text-muted d-block mb-1">Wallet</small>
-                                        <h6 class="mb-0">Starbucks</h6>
-                                    </div>
-                                    <div class="user-progress d-flex align-items-center gap-1">
-                                        <h6 class="mb-0">+203.33</h6>
-                                        <span class="text-muted">USD</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <img src="{{ asset('assets-back') }}/img/icons/unicons/cc-warning.png"
-                                        alt="User" class="rounded" />
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <small class="text-muted d-block mb-1">Mastercard</small>
-                                        <h6 class="mb-0">Ordered Food</h6>
-                                    </div>
-                                    <div class="user-progress d-flex align-items-center gap-1">
-                                        <h6 class="mb-0">-92.45</h6>
-                                        <span class="text-muted">USD</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+          <div class="w-full max-w-full px-3 lg:w-5/12 lg:flex-none">
+            <div slider class="relative w-full h-full overflow-hidden rounded-2xl">
+              <!-- slide 1 -->
+              <div slide class="absolute w-full h-full transition-all duration-500">
+                <img class="object-cover h-full" src="{{ asset('assets-back') }}/img/carousel-1.jpg" alt="carousel image" />
+                <div class="block text-start ml-12 left-0 bottom-0 absolute right-[15%] pt-5 pb-5 text-white">
+                  <div class="inline-block w-8 h-8 mb-4 text-center text-black bg-white bg-center rounded-lg fill-current stroke-none">
+                    <i class="top-0.75 text-xxs relative text-slate-700 ni ni-camera-compact"></i>
+                  </div>
+                  <h5 class="mb-1 text-white">Get started with Argon</h5>
+                  <p class="dark:opacity-80">There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
                 </div>
+              </div>
+
+              <!-- slide 2 -->
+              <div slide class="absolute w-full h-full transition-all duration-500">
+                <img class="object-cover h-full" src="{{ asset('assets-back') }}/img/carousel-2.jpg" alt="carousel image" />
+                <div class="block text-start ml-12 left-0 bottom-0 absolute right-[15%] pt-5 pb-5 text-white">
+                  <div class="inline-block w-8 h-8 mb-4 text-center text-black bg-white bg-center rounded-lg fill-current stroke-none">
+                    <i class="top-0.75 text-xxs relative text-slate-700 ni ni-bulb-61"></i>
+                  </div>
+                  <h5 class="mb-1 text-white">Faster way to create web pages</h5>
+                  <p class="dark:opacity-80">That’s my skill. I’m not really specifically talented at anything except for the ability to learn.</p>
+                </div>
+              </div>
+
+              <!-- slide 3 -->
+              <div slide class="absolute w-full h-full transition-all duration-500">
+                <img class="object-cover h-full" src="{{ asset('assets-back') }}/img/carousel-3.jpg" alt="carousel image" />
+                <div class="block text-start ml-12 left-0 bottom-0 absolute right-[15%] pt-5 pb-5 text-white">
+                  <div class="inline-block w-8 h-8 mb-4 text-center text-black bg-white bg-center rounded-lg fill-current stroke-none">
+                    <i class="top-0.75 text-xxs relative text-slate-700 ni ni-trophy"></i>
+                  </div>
+                  <h5 class="mb-1 text-white">Share with us your design tips!</h5>
+                  <p class="dark:opacity-80">Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
+                </div>
+              </div>
+
+              <!-- Control buttons -->
+              <button btn-next class="absolute z-10 w-10 h-10 p-2 text-lg text-white border-none opacity-50 cursor-pointer hover:opacity-100 far fa-chevron-right active:scale-110 top-6 right-4"></button>
+              <button btn-prev class="absolute z-10 w-10 h-10 p-2 text-lg text-white border-none opacity-50 cursor-pointer hover:opacity-100 far fa-chevron-left active:scale-110 top-6 right-16"></button>
             </div>
-            <!--/ Transactions -->
+          </div>
+        </div>
+
+        <!-- cards row 3 -->
+
+        <div class="flex flex-wrap mt-6 -mx-3">
+          <div class="w-full max-w-full px-3 mt-0 mb-6 lg:mb-0 lg:w-7/12 lg:flex-none">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border">
+              <div class="p-4 pb-0 mb-0 rounded-t-4">
+                <div class="flex justify-between">
+                  <h6 class="mb-2 dark:text-white">Sales by Country</h6>
+                </div>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="items-center w-full mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
+                  <tbody>
+                    <tr>
+                      <td class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40">
+                        <div class="flex items-center px-2 py-1">
+                          <div>
+                            <img src="{{ asset('assets-back') }}/img/icons/flags/US.png" alt="Country flag" />
+                          </div>
+                          <div class="ml-6">
+                            <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Country:</p>
+                            <h6 class="mb-0 text-sm leading-normal dark:text-white">United States</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Sales:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">2500</h6>
+                        </div>
+                      </td>
+                      <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Value:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">$230,900</h6>
+                        </div>
+                      </td>
+                      <td class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="flex-1 text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Bounce:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">29.9%</h6>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40">
+                        <div class="flex items-center px-2 py-1">
+                          <div>
+                            <img src="{{ asset('assets-back') }}/img/icons/flags/DE.png" alt="Country flag" />
+                          </div>
+                          <div class="ml-6">
+                            <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Country:</p>
+                            <h6 class="mb-0 text-sm leading-normal dark:text-white">Germany</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Sales:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">3.900</h6>
+                        </div>
+                      </td>
+                      <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Value:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">$440,000</h6>
+                        </div>
+                      </td>
+                      <td class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="flex-1 text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Bounce:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">40.22%</h6>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40">
+                        <div class="flex items-center px-2 py-1">
+                          <div>
+                            <img src="{{ asset('assets-back') }}/img/icons/flags/GB.png" alt="Country flag" />
+                          </div>
+                          <div class="ml-6">
+                            <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Country:</p>
+                            <h6 class="mb-0 text-sm leading-normal dark:text-white">Great Britain</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Sales:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">1.400</h6>
+                        </div>
+                      </td>
+                      <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Value:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">$190,700</h6>
+                        </div>
+                      </td>
+                      <td class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                        <div class="flex-1 text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Bounce:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">23.44%</h6>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 align-middle bg-transparent border-0 w-3/10 whitespace-nowrap">
+                        <div class="flex items-center px-2 py-1">
+                          <div>
+                            <img src="{{ asset('assets-back') }}/img/icons/flags/BR.png" alt="Country flag" />
+                          </div>
+                          <div class="ml-6">
+                            <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Country:</p>
+                            <h6 class="mb-0 text-sm leading-normal dark:text-white">Brasil</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="p-2 align-middle bg-transparent border-0 whitespace-nowrap">
+                        <div class="text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Sales:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">562</h6>
+                        </div>
+                      </td>
+                      <td class="p-2 align-middle bg-transparent border-0 whitespace-nowrap">
+                        <div class="text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Value:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">$143,960</h6>
+                        </div>
+                      </td>
+                      <td class="p-2 text-sm leading-normal align-middle bg-transparent border-0 whitespace-nowrap">
+                        <div class="flex-1 text-center">
+                          <p class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">Bounce:</p>
+                          <h6 class="mb-0 text-sm leading-normal dark:text-white">32.14%</h6>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="w-full max-w-full px-3 mt-0 lg:w-5/12 lg:flex-none">
+            <div class="border-black/12.5 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
+              <div class="p-4 pb-0 rounded-t-4">
+                <h6 class="mb-0 dark:text-white">Categories</h6>
+              </div>
+              <div class="flex-auto p-4">
+                <ul class="flex flex-col pl-0 mb-0 rounded-lg">
+                  <li class="relative flex justify-between py-2 pr-4 mb-2 border-0 rounded-t-lg rounded-xl text-inherit">
+                    <div class="flex items-center">
+                      <div class="inline-block w-8 h-8 mr-4 text-center text-black bg-center shadow-sm fill-current stroke-none bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 rounded-xl">
+                        <i class="text-white ni ni-mobile-button relative top-0.75 text-xxs"></i>
+                      </div>
+                      <div class="flex flex-col">
+                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Devices</h6>
+                        <span class="text-xs leading-tight dark:text-white/80">250 in stock, <span class="font-semibold">346+ sold</span></span>
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <button class="group ease-in leading-pro text-xs rounded-3.5xl p-1.2 h-6.5 w-6.5 mx-0 my-auto inline-block cursor-pointer border-0 bg-transparent text-center align-middle font-bold text-slate-700 shadow-none transition-all dark:text-white"><i class="ni ease-bounce text-2xs group-hover:translate-x-1.25 ni-bold-right transition-all duration-200" aria-hidden="true"></i></button>
+                    </div>
+                  </li>
+                  <li class="relative flex justify-between py-2 pr-4 mb-2 border-0 rounded-xl text-inherit">
+                    <div class="flex items-center">
+                      <div class="inline-block w-8 h-8 mr-4 text-center text-black bg-center shadow-sm fill-current stroke-none bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 rounded-xl">
+                        <i class="text-white ni ni-tag relative top-0.75 text-xxs"></i>
+                      </div>
+                      <div class="flex flex-col">
+                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Tickets</h6>
+                        <span class="text-xs leading-tight dark:text-white/80">123 closed, <span class="font-semibold">15 open</span></span>
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <button class="group ease-in leading-pro text-xs rounded-3.5xl p-1.2 h-6.5 w-6.5 mx-0 my-auto inline-block cursor-pointer border-0 bg-transparent text-center align-middle font-bold text-slate-700 shadow-none transition-all dark:text-white"><i class="ni ease-bounce text-2xs group-hover:translate-x-1.25 ni-bold-right transition-all duration-200" aria-hidden="true"></i></button>
+                    </div>
+                  </li>
+                  <li class="relative flex justify-between py-2 pr-4 mb-2 border-0 rounded-b-lg rounded-xl text-inherit">
+                    <div class="flex items-center">
+                      <div class="inline-block w-8 h-8 mr-4 text-center text-black bg-center shadow-sm fill-current stroke-none bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 rounded-xl">
+                        <i class="text-white ni ni-box-2 relative top-0.75 text-xxs"></i>
+                      </div>
+                      <div class="flex flex-col">
+                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Error logs</h6>
+                        <span class="text-xs leading-tight dark:text-white/80">1 is active, <span class="font-semibold">40 closed</span></span>
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <button class="group ease-in leading-pro text-xs rounded-3.5xl p-1.2 h-6.5 w-6.5 mx-0 my-auto inline-block cursor-pointer border-0 bg-transparent text-center align-middle font-bold text-slate-700 shadow-none transition-all dark:text-white"><i class="ni ease-bounce text-2xs group-hover:translate-x-1.25 ni-bold-right transition-all duration-200" aria-hidden="true"></i></button>
+                    </div>
+                  </li>
+                  <li class="relative flex justify-between py-2 pr-4 border-0 rounded-b-lg rounded-xl text-inherit">
+                    <div class="flex items-center">
+                      <div class="inline-block w-8 h-8 mr-4 text-center text-black bg-center shadow-sm fill-current stroke-none bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 rounded-xl">
+                        <i class="text-white ni ni-satisfied relative top-0.75 text-xxs"></i>
+                      </div>
+                      <div class="flex flex-col">
+                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Happy users</h6>
+                        <span class="text-xs leading-tight dark:text-white/80"><span class="font-semibold">+ 430 </span></span>
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <button class="group ease-in leading-pro text-xs rounded-3.5xl p-1.2 h-6.5 w-6.5 mx-0 my-auto inline-block cursor-pointer border-0 bg-transparent text-center align-middle font-bold text-slate-700 shadow-none transition-all dark:text-white"><i class="ni ease-bounce text-2xs group-hover:translate-x-1.25 ni-bold-right transition-all duration-200" aria-hidden="true"></i></button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 @endsection
