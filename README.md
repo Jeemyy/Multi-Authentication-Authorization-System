@@ -63,7 +63,6 @@ This project demonstrates a **multi-guard authentication** architecture with a *
 | **Protected**      | All `Route::prefix('back')`                                         | **admin** middleware → unauthenticated redirect to `back.login`           |
 
 
-> > > > > > > 2e4e5224e4d764d3b1c92e8527071dec9d8aca62
 
 **RedirectIfAuthenticated** → Redirects to `back.index` when guard `admin` is authenticated, and to `front.index` when the default guard is authenticated.
 
@@ -243,7 +242,6 @@ Suitable for **portfolios** and as a base for apps that need a clear separation 
 For questions or contributions, open an issue or pull request in the repository.
 ---
 
-# =======
 
 **RedirectIfAuthenticated** → Redirects to `back.index` when guard `admin` is authenticated, and to `front.index` when the default guard is authenticated.
 
