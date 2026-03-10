@@ -1,4 +1,4 @@
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets-back') }}/img/apple-icon.png" />
@@ -15,4 +15,11 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <!-- Main Styling -->
     <link href="{{ asset('assets-back') }}/css/argon-dashboard-tailwind.css?v=1.0.1" rel="stylesheet" />
-  </head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
